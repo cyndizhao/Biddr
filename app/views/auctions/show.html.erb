@@ -1,0 +1,50 @@
+<h1>Auction Show</h1>
+
+<div class="col-md-8">
+  <h3>Auction Title: <%= @auction.title %></h3>
+  <p>Owner: <%= @auction.user.first_name.capitalize %></p>
+  <p><%= @auction.details %></p>
+  <% if @auction.may_publish? && @auction.user == current_user%>
+
+  <%= link_to 'Publish', auction_publishings_path(@auction), method: :post %>
+  <% end %>
+
+  <% if user_signed_in? && (can? :track, @auction)%>
+    <% if !@auction.track_by?(current_user) %>
+      <%= link_to fa_icon("eye"), auction_tracks_path(@auction), method: :post%>
+    <% else %>
+      <%= link_to fa_icon("eye-slash"),  auction_tracks_path(@auction, @auction.track_for(current_user)), method: :delete %>
+    <% end %>
+    <span><%= pluralize(@auction.tracks.count, 'track') %></span>
+  <% end %>
+
+  <%= form_for [@auction, @bid] do |f| %>
+    <%= f.text_field :price, placeholder: "Bid Price" %>
+    <%= f.submit class: "btn" %>
+  <% end %>
+
+
+  <h4>Previous bids</h4>
+  <ul>
+    <% @auction.bids.each do |b| %>
+    <li>
+      <span>$<%= b.price %> at <%= b.created_at.strftime("%b %d %Y") %></span>
+      &nbsp
+      <span><i class="fa fa-user-o" aria-hidden="true"></i>
+        <%= b.user.first_name.capitalize %> <%= b.user.last_name.capitalize %>
+      </span>
+    </li>
+    <%= link_to 'Delete', auction_bid_path(@auction, b), class: "btn btn-danger", method: :delete, data:{confirm: 'Are you sure?'} %>
+    <% end %>
+  </ul>
+
+</div>
+
+<div class="col-md-4">
+  <h3>Current Price: $<%= @current_price%></h3>
+  <%if @current_price >= @reserve_price %>
+    <p>Reserve Price Met</p>
+  <% else %>
+    <p>Reserve Price Not Met</p>
+  <% end %>
+</div>

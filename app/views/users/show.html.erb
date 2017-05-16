@@ -1,0 +1,7 @@
+<h1>All Auction <%= @user.first_name.capitalize %> has made bids on them</h1>
+<ul>
+  <% @user.bids.each do |b| %>
+    <h3><li><%= b.auction.title %></li></h3>
+    <span><%= link_to "See Details", auction_path(b.auction) %></span>
+  <% end %>
+</ul>

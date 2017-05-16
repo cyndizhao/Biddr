@@ -1,0 +1,43 @@
+<%= @user.errors.full_messages.join(', ') %>
+<div class="row" id="signup">
+    <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-4">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3>Registration</h3>
+              </div>
+              <div class="panel-body">
+                <%= form_for @user do |f| %>
+                  <hr>
+                  <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <%= f.text_field :first_name, class:'form-control input-md', placeholder: "First Name" %>
+                      </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                      <div class="form-group">
+                        <%= f.text_field :last_name, class:'form-control input-md', placeholder: "Last Name" %>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <%= f.email_field :email, class:'form-control input-md', placeholder: "Email Address" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.password_field :password, class:'form-control input-md', placeholder: "Password" %>
+                  </div>
+
+                  <div class="form-group">
+                    <%= f.password_field :password_confirmation, class:'form-control input-md', placeholder: "Password Confirmation" %>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-xs-12 col-md-6"><input type="submit" value="Create my account" class="btn btn-primary btn-block btn-md input-md" tabindex="7"></div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
+
+      	  </div>
+</div>

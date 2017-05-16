@@ -1,0 +1,8 @@
+<h1>All Auctions You Tracked</h1>
+<ul>
+  <% @auctions.each do |auction| %>
+    <h3><li><%= auction.title %></li></h3>
+    <p>State: <%= auction.aasm_state %></p>
+    <p> <%= link_to 'View this auction', auction_path(auction.id)%></p>
+  <% end %>
+</ul>

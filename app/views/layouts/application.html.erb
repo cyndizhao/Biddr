@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Biddr</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+  </head>
+
+  <body>
+    <div class="fluid-container">
+      <div class="container">
+        <span style="font-size:20px;"><%= link_to "Home Auction", auctions_path %></span>
+        |
+        <% if user_signed_in? %>
+        <span style="font-size:20px;"><%= link_to 'New Auction', new_auction_path %><span>
+        |
+        <span style="font-size:20px;"><%= link_to 'All Bits You Made', user_path(current_user) %><span>
+        |
+        <span style="font-size:20px;"><%= link_to 'All Auctions You Tracked', user_tracks_path(current_user) %><span>
+        |
+        <span style="font-size:20px;"><%= "HELLO,#{current_user.first_name.upcase}"%><span>
+        |
+        <span style="font-size:20px;"><%= link_to "Sign Out", sessions_path, method: :delete %></span>
+        |
+        <% else %>
+        <span style="font-size:20px;"><%= link_to "Sign In", new_session_path %></span>
+        |
+        <span style="font-size:20px;"><%= link_to "Sign Up", new_user_path %></span>
+        <% end %>
+      </div>
+
+      <div class="container" id="mainContent">
+        <% if flash[:notice] %>
+        <div class="alert alert-success" role="alert">
+
+          <%= flash[:notice] %>
+        </div>
+        <% elsif flash[:alert] %>
+        <div class="alert alert-danger" role="alert">
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          <span class="sr-only">Error:</span>
+          <%= flash[:alert] %>
+        </div>
+        <% end %>
+      <%= yield %>
+      </div>
+    </div>
+  </body>
+</html>
